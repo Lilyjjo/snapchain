@@ -4,7 +4,8 @@
 # Simply run the following command to install the latest version of snapchain:
 # curl <file location> | bash
 
-REPO="farcasterxyz/snapchain"
+HOME_DIR="/mnt/data/snapchain"
+REPO="Lilyjjo/snapchain"
 RAWFILE_BASE="https://raw.githubusercontent.com/$REPO"
 LATEST_TAG="@latest"
 SCRIPT_FILE_PATH="scripts/snapchain.sh"
@@ -68,18 +69,18 @@ fetch_file_from_repo() {
 }
 
 do_bootstrap() {
-    # Make the ~/snapchain directory if it doesn't exist
-    mkdir -p ~/snapchain
+    # Make the $HOME_DIR directory if it doesn't exist
+    mkdir -p $HOME_DIR
 
     local tmp_file
     tmp_file=$(mktemp)
     fetch_file_from_repo "$SCRIPT_FILE_PATH" "$tmp_file"
 
-    mv "$tmp_file" ~/snapchain/snapchain.sh
-    chmod +x ~/snapchain/snapchain.sh
+    mv "$tmp_file" $HOME_DIR/snapchain.sh
+    chmod +x $HOME_DIR/snapchain.sh
 
     # Run the snapchain.sh script
-    cd ~/snapchain
+    cd $HOME_DIR
     exec ./snapchain.sh "upgrade" < /dev/tty
 }
 

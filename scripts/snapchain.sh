@@ -6,8 +6,9 @@
 
 # Define the version of this script
 CURRENT_VERSION="1"
+HOME_DIR="/mnt/data/snapchain"
 
-REPO="farcasterxyz/snapchain"
+REPO="Lilyjjo/snapchain"
 RAWFILE_BASE="https://raw.githubusercontent.com/$REPO"
 LATEST_TAG="@latest"
 
@@ -501,19 +502,19 @@ reexec_as_root_if_needed() {
     if [[ "$(uname)" == "Linux" ]]; then
         # Check if not running as root, then re-exec as root
         if [[ "$(id -u)" -ne 0 ]]; then
-            # Ensure the script runs in the ~/snapchain directory
-            cd ~/snapchain || { echo "Failed to switch to ~/snapchain directory."; exit 1; }
+            # Ensure the script runs in the $HOME_DIR directory
+            cd $HOME_DIR || { echo "Failed to switch to $HOME_DIR directory."; exit 1; }
             exec sudo "$0" "$@"
         else
-            # If the current directory is not named "snapchain", change to "~/snapchain"
+            # If the current directory is not named "snapchain", change to "$HOME_DIR"
             if [[ "$(basename "$PWD")" != "snapchain" ]]; then
-                cd "$(dirname "$0")" || { echo "Failed to switch to ~/snapchain directory."; exit 1; }
+                cd "$(dirname "$0")" || { echo "Failed to switch to $HOME_DIR directory."; exit 1; }
             fi
             echo "✅ Running on Linux ($(pwd))."
         fi
     # Check if on macOS
     elif [[ "$(uname)" == "Darwin" ]]; then
-        cd ~/snapchain || { echo "Failed to switch to ~/snapchain directory."; exit 1; }
+        cd $HOME_DIR || { echo "Failed to switch to $HOME_DIR directory."; exit 1; }
         echo "✅ Running on macOS $(pwd)."
     fi
 }
@@ -556,9 +557,9 @@ fi
 
 # Check the command-line argument for 'upgrade'
 if [ "$1" == "upgrade" ]; then
-    # Ensure the ~/snapchain directory exists
-    if [ ! -d ~/snapchain ]; then
-        mkdir -p ~/snapchain || { echo "Failed to create ~/snapchain directory."; exit 1; }
+    # Ensure the $HOME_DIR directory exists
+    if [ ! -d $HOME_DIR ]; then
+        mkdir -p $HOME_DIR || { echo "Failed to create $HOME_DIR directory."; exit 1; }
     fi
 
     # Install dependencies
